@@ -102,18 +102,18 @@ As in Pacman, positions are represented by (x,y) Cartesian coordinates and any a
 
 Write a value iteration agent in`ValueIterationAgent`, which has been partially specified for you in `valueIterationAgents.py`. Your value iteration agent is an offline planner, not a reinforcement learning agent, and so the relevant training option is the number of iterations of value iteration it should run (option -i) in its initial planning phase. ValueIterationAgent takes an MDP on construction and runs value iteration for the specified number of iterations before the constructor returns.
 
-Value iteration computes k-step estimates of the optimal values, V_k. In addition to running value iteration, implement the following methods for ValueIterationAgent using V_k.
+Value iteration computes k-step estimates of the optimal values, $V_k$. In addition to running value iteration, implement the following methods for ValueIterationAgent using $V_k$.
 
 * `computeActionFromValues(state)` computes the best action according to the value function given by self.values.
 * `computeQValueFromValues(state, action)` returns the Q-value of the (state, action) pair given by the value function given by self.values.
 
 These quantities are all displayed in the GUI: values are numbers in squares, Q-values are numbers in square quarters, and policies are arrows out from each square.
 
-*Important:* Use the "batch" version of value iteration where each vector V_k is computed from a fixed vector V_{k-1} (like in lecture), not the "online" version where one single weight vector is updated in place. This means that when a state's value is updated in iteration k based on the values of its successor states, the successor state values used in the value update computation should be those from iteration k-1 (even if some of the successor states had already been updated in iteration k). The difference is discussed in Sutton & Barto in the 6th paragraph of chapter 4.1.
+*Important:* Use the "batch" version of value iteration where each vector $V_k$ is computed from a fixed vector $V_{k-1}$ (like in lecture), not the "online" version where one single weight vector is updated in place. This means that when a state's value is updated in iteration k based on the values of its successor states, the successor state values used in the value update computation should be those from iteration k-1 (even if some of the successor states had already been updated in iteration k). The difference is discussed in Sutton & Barto in the 6th paragraph of chapter 4.1.
 
-*Note:* A policy synthesized from values of depth k (which reflect the next k rewards) will actually reflect the next k+1 rewards (i.e. you return π_{k+1}). Similarly, the Q-values will also reflect one more reward than the values (i.e. you return Q_{k+1}).
+*Note:* A policy synthesized from values of depth k (which reflect the next k rewards) will actually reflect the next k+1 rewards (i.e. you return $π_{k+1}$). Similarly, the Q-values will also reflect one more reward than the values (i.e. you return $Q_{k+1}$).
 
-You should return the synthesized policy π_{k+1}.
+You should return the synthesized policy $π_{k+1}$.
 
 *Hint:* Use the `util.Counter` class in `util.py`, which is a dictionary with a default value of zero. Methods such as `totalCount` should simplify your code. However, be careful with `argMax`: the actual argmax you want may be a key not in the counter!
 
@@ -276,20 +276,20 @@ Pacman fails to win on larger layouts because each board configuration is a sepa
 
 Implement an approximate Q-learning agent that learns weights for features of states, where many states might share the same features. Write your implementation in `ApproximateQAgent` class in `qlearningAgents.py`, which is a subclass of `PacmanQAgent`.
 
-*Note:* Approximate Q-learning assumes the existence of a feature function f(s,a) over state and action pairs, which yields a vector f_1(s,a) ... f_i(s,a) ... f_n(s,a) of feature values. We provide feature functions for you in `featureExtractors.py`. Feature vectors are `util.Counter` (like a dictionary) objects containing the non-zero pairs of features and values; all omitted features have value zero.
+*Note:* Approximate Q-learning assumes the existence of a feature function f(s,a) over state and action pairs, which yields a vector $f_1(s,a) ... f_i(s,a) ... f_n(s,a)$ of feature values. We provide feature functions for you in `featureExtractors.py`. Feature vectors are `util.Counter` (like a dictionary) objects containing the non-zero pairs of features and values; all omitted features have value zero.
 
-The approximate Q-function takes the following form
+The approximate Q-function takes the following form 
 
-Q(s,a) = ∑ f_i(s,a) w_i
+$$ Q(s,a) = \sum_{i=1}^n f_i(s,a) w_i $$
 
- where each weight w_i is associated with a particular feature f_i(s,a). In your code, you should implement the weight vector as a dictionary mapping features (which the feature extractors will return) to weight values. You will update your weight vectors similarly to how you updated Q-values:
+ where each weight $w_i$ is associated with a particular feature $f_i(s,a)$. In your code, you should implement the weight vector as a dictionary mapping features (which the feature extractors will return) to weight values. You will update your weight vectors similarly to how you updated Q-values:
 
-δ = r + γ max Q(s', a') - Q(s,a)
+$$\delta = r + \gamma \cdot \max_{a'} Q(s', a') - Q(s,a) $$
 
-w_i ← w_i + α . δ . f_i(s,a)
+$$w_i \gets w_i + \alpha \cdot \delta \cdot f_i(s,a) $$
 
 
-Note that the δ term is the same as in normal Q-learning, and r is the experienced reward.
+Note that the $\delta$ term is the same as in normal Q-learning, and r is the experienced reward.
 
 By default, `ApproximateQAgent` uses the `IdentityExtractor`, which assigns a single feature to every `(state,action)` pair. With this feature extractor, your approximate Q-learning agent should work identically to `PacmanQAgent`. You can test this with the following command:
 
