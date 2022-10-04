@@ -89,18 +89,18 @@ Como no Pacman, as posições são representadas por coordenadas cartesianas (x,
 
 Escreva um agente de iteração de valor em `ValueIterationAgent`, que foi parcialmente especificado para você em `valueIterationAgents.py`. Seu agente de iteração de valor é um planejador offline, não um agente de aprendizado por reforço e, portanto, a opção de treinamento relevante é o número de iterações do algoritmo de iteração de valor que ele deve executar (opção -i) em sua fase de planejamento inicial. `ValueIterationAgent` usa um MDP na construtora e executa a iteração de valor para o número especificado de iterações antes de retornar.
 
-A iteração de valor calcula estimativas de k passos dos valores ótimos, V_k. Além de executar a iteração de valor, implemente os seguintes métodos para `ValueIterationAgent` usando V_k. 
+A iteração de valor calcula estimativas de k passos dos valores ótimos, $V_k$. Além de executar a iteração de valor, implemente os seguintes métodos para `ValueIterationAgent` usando $V_k$. 
 
 * `computeActionFromValues(state)` calcula a melhor ação de acordo com a função de valor fornecida por `self.values`. 
 * `computeQValueFromValues(state, action)` retorna o valor-Q do par (estado, ação) dado pela função de valor em `self.values`. 
 
 Essas quantidades são todas exibidas na GUI: os valores são números nos quadrados, os valores-Q são números nos triângulos (um para cada ação) e a política são as setas em cada quadrado. 
 
-*Importante:* Use a versão em "batch" da iteração de valor, onde cada vetor V_k é calculado a partir de um vetor fixo V_{k-1} (como na aula), não a versão "online" onde um único vetor de pesos é atualizado "in place". Isso significa que quando o valor de um estado é atualizado na iteração k com base nos valores de seus estados sucessores, os valores dos sucessores usados no cálculo devem ser aqueles da iteração k-1 (mesmo se alguns dos estados sucessores já tivessem sido atualizado na iteração k). A diferença é discutida em Sutton & Barto no 6º parágrafo do capítulo 4.1. 
+*Importante:* Use a versão em "batch" da iteração de valor, onde cada vetor $V_k$ é calculado a partir de um vetor fixo $V_{k-1}$, não a versão "online" onde um único vetor de pesos é atualizado "in place". Isso significa que quando o valor de um estado é atualizado na iteração k com base nos valores de seus estados sucessores, os valores dos sucessores usados no cálculo devem ser aqueles da iteração k-1 (mesmo se alguns dos estados sucessores já tivessem sido atualizado na iteração k). A diferença é discutida em Sutton & Barto no 6º parágrafo do capítulo 4.1. 
 
-*Observação:* Uma política sintetizada a partir de valores em profundidade k (que refletem as próximas k recompensas) refletirá na verdade as próximas k + 1 recompensas (ou seja, você retorna π_{k+1}). Da mesma forma, os valores Q também refletirão uma recompensa a mais do que os valores (ou seja, você retorna Q_{k+1}).
+*Observação:* Uma política sintetizada a partir de valores em profundidade k (que refletem as próximas k recompensas) refletirá na verdade as próximas k + 1 recompensas (ou seja, você retorna $π_{k+1}$). Da mesma forma, os valores Q também refletirão uma recompensa a mais do que os valores (ou seja, você retorna $Q_{k+1}$).
 
-Você deve retornar a política sintetizada π_{k+1}.
+Você deve retornar a política sintetizada $π_{k+1}$.
 
 *Dica:* Use a classe `util.Counter` em` util.py`, que é um dicionário com valor padrão zero. Métodos como `totalCount` devem simplificar seu código. No entanto, tome cuidado com `argMax`: o argmax real que você deseja pode ser uma chave que não está no contador!
 
@@ -261,20 +261,20 @@ Pacman não consegue vencer em layouts maiores porque cada configuração do map
 
 Implemente um agente Q-learning aproximado que aprenda pesos para features de estados, onde muitos estados podem compartilhar as mesmos features. Escreva sua implementação na classe `ApproximateQAgent` em` qlearningAgents.py`, que é uma subclasse de `PacmanQAgent`.
 
-*Nota:* Q-learning aproximado supõe a existência de uma função de características (features) `f(s, a)` sobre pares de estado e ação, que produz um vetor f_1 (s, a) ... f_i (s, a) ... f_n (s, a) de valores de features. Fornecemos funções de features para você em `featureExtractors.py`. Os vetores de features são objetos `util.Counter` (como um dicionário) contendo os pares de features e valores diferentes de zero; todas as features omitidas têm valor zero. 
+*Nota:* Q-learning aproximado supõe a existência de uma função de características (features) `f(s, a)` sobre pares de estado e ação, que produz um vetor $f_1(s,a) ... f_i(s,a) ... f_n(s,a)$ de valores de features. Fornecemos funções de features para você em `featureExtractors.py`. Os vetores de features são objetos `util.Counter` (como um dicionário) contendo os pares de features e valores diferentes de zero; todas as features omitidas têm valor zero. 
 
 A função-Q aproximada tem a seguinte forma: 
 
-Q(s,a) = ∑ f_i(s,a) w_i
+$$ Q(s,a) = \sum_{i=1}^n f_i(s,a) w_i $$
 
 onde cada peso w_i está associado a uma feature particular f_i(s, a). Em seu código, você deve implementar o vetor de pesos com um dicionário mapeando features (que os extratores de feature retornarão) para valores de peso. Você atualizará seus vetores de peso de maneira similar à qual atualizou os valores Q: 
 
-δ = r + γ max Q(s', a') - Q(s,a)
+$$\delta = r + \gamma \cdot \max_{a'} Q(s', a') - Q(s,a) $$
 
-w_i ← w_i + α . δ . f_i(s,a)
+$$w_i \gets w_i + \alpha \cdot \delta \cdot f_i(s,a) $$
 
 
-Observe que o termo δ é o mesmo que no Q-learning normal e r é a recompensa experimentada.
+Observe que o termo $\delta$ é o mesmo que no Q-learning normal e r é a recompensa experimentada.
 
 Por padrão, `ApproximateQAgent` usa o` IdentityExtractor`, que atribui uma feature única para cada par `(estado, ação)`. Com este extrator de features, seu agente Q-learning aproximado deve funcionar de forma idêntica ao `PacmanQAgent`. Você pode testar isso com o seguinte comando:
 
