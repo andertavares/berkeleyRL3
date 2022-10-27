@@ -124,7 +124,7 @@ O comando a seguir carrega seu `ValueIterationAgent`, que irá computar uma pol�
 
 # Questão 2: Análise da Travessia de Ponte
 
-`BridgeGrid` é um mapa em grade com um estado terminal de baixa recompensa e um estado terminal de alta recompensa separados por uma "ponte" estreita, em cada lado da qual há um abismo de recompensa altamente negativa. O agente começa próximo ao estado de baixa recompensa. Com o desconto padrão de 0,9 e o ruído padrão de 0,2, a política ótima não cruza a ponte. Altere apenas UM dos parâmetros de desconto e ruído para que a política ótima faça com que o agente tente cruzar a ponte. Coloque sua resposta em `question2 ()` de `analysis.py`. (O ruído se refere à frequência com que um agente termina em um estado de sucessor não intencional quando executa uma ação.) O padrão corresponde 
+`BridgeGrid` é um mapa em grade com um estado terminal de baixa recompensa e um estado terminal de alta recompensa separados por uma "ponte" estreita, em cada lado da qual há um abismo de recompensa altamente negativa. O agente começa próximo ao estado de baixa recompensa. Com o desconto padrão de 0,9 e o ruído padrão de 0,2, a política ótima não cruza a ponte. Altere apenas UM dos parâmetros de desconto e ruído para que a política ótima faça com que o agente tente cruzar a ponte. Coloque sua resposta em `question2 ()` de `analysis.py`. (O ruído se refere à frequência com que um agente termina em um estado de sucessor não intencional quando executa uma ação.) O padrão corresponde a:
 
 `python gridworld.py -a value -i 100 -g BridgeGrid --discount 0.9 --noise 0.2`
 
