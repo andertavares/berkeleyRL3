@@ -272,8 +272,8 @@ def evaluate(generateSolutions, testRoot, moduleDict, exceptionMap=ERROR_HINT_MA
         questionDicts[q] = questionDict
 
         # load test cases into question
-        tests = [t for t in os.listdir(subdir_path) if re.match('[^#~.].*\.test\Z', t)]
-        tests = [re.match('(.*)\.test\Z', t).group(1) for t in tests]
+        tests = [t for t in os.listdir(subdir_path) if re.match(r'[^#~.].*\.test\Z', t)]
+        tests = [re.match(r'(.*)\.test\Z', t).group(1) for t in tests]
         for t in sorted(tests):
             test_file = os.path.join(subdir_path, '%s.test' % t)
             solution_file = os.path.join(subdir_path, '%s.solution' % t)
@@ -338,16 +338,16 @@ if __name__ == '__main__':
     codePaths = options.studentCode.split(',')
     # moduleCodeDict = {}
     # for cp in codePaths:
-    #     moduleName = re.match('.*?([^/]*)\.py', cp).group(1)
+    #     moduleName = re.match(r'.*?([^/]*)\.py', cp).group(1)
     #     moduleCodeDict[moduleName] = readFile(cp, root=options.codeRoot)
     # moduleCodeDict['projectTestClasses'] = readFile(options.testCaseCode, root=options.codeRoot)
     # moduleDict = loadModuleDict(moduleCodeDict)
 
     moduleDict = {}
     for cp in codePaths:
-        moduleName = re.match('.*?([^/]*)\.py', cp).group(1)
+        moduleName = re.match(r'.*?([^/]*)\.py', cp).group(1)
         moduleDict[moduleName] = loadModuleFile(moduleName, os.path.join(options.codeRoot, cp))
-    moduleName = re.match('.*?([^/]*)\.py', options.testCaseCode).group(1)
+    moduleName = re.match(r'.*?([^/]*)\.py', options.testCaseCode).group(1)
     moduleDict['projectTestClasses'] = loadModuleFile(moduleName, os.path.join(options.codeRoot, options.testCaseCode))
 
 
