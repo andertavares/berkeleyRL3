@@ -47,21 +47,21 @@ class TestParser(object):
         # read a property in each loop cycle
         while(i < len(lines)):
             # skip blank lines
-            if re.match('\A\s*\Z', lines[i]):
+            if re.match(r'\A\s*\Z', lines[i]):
                 test['__emit__'].append(("raw", raw_lines[i]))
                 i += 1
                 continue
-            m = re.match('\A([^"]*?):\s*"([^"]*)"\s*\Z', lines[i])
+            m = re.match(r'\A([^"]*?):\s*"([^"]*)"\s*\Z', lines[i])
             if m:
                 test[m.group(1)] = m.group(2)
                 test['__emit__'].append(("oneline", m.group(1)))
                 i += 1
                 continue
-            m = re.match('\A([^"]*?):\s*"""\s*\Z', lines[i])
+            m = re.match(r'\A([^"]*?):\s*"""\s*\Z', lines[i])
             if m:
                 msg = []
                 i += 1
-                while(not re.match('\A\s*"""\s*\Z', lines[i])):
+                while(not re.match(r'\A\s*"""\s*\Z', lines[i])):
                     msg.append(raw_lines[i])
                     i += 1
                 test[m.group(1)] = '\n'.join(msg)
